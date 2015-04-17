@@ -108,6 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _activeChanged: function() {
+      this.toggleAttribute('aria-pressed', this.active);
       this._buttonStateChanged();
     },
 
