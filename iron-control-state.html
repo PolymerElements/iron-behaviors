@@ -24,6 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       focused: {
         type: Boolean,
+        value: false,
         notify: true,
         readOnly: true,
         reflectToAttribute: true
@@ -38,6 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       disabled: {
         type: Boolean,
+        value: false,
         notify: true,
         observer: '_disabledChanged',
         reflectToAttribute: true
@@ -45,23 +47,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     },
 
+    observers: {
+      'focused disabled': '_changedControlState'
+    },
+
     listeners: {
       focus: '_focusHandler',
       blur: '_blurHandler'
     },
 
-    ready: function() {
-      this._changedControlState();
-    },
-
     _focusHandler: function() {
       this._setFocused(true);
-      this._changedControlState();
     },
 
     _blurHandler: function() {
       this._setFocused(false);
-      this._changedControlState();
     },
 
     _disabledChanged: function(disabled, old) {
@@ -75,10 +75,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       } else if (this._oldTabIndex !== undefined) {
         this.tabIndex = this._oldTabIndex;
       }
-      this._changedControlState();
     },
 
     _changedControlState: function() {
+      // _controlStateChanged is abstract, follow-on behaviors may implement it
       if (this._controlStateChanged) {
         this._controlStateChanged();
       }
