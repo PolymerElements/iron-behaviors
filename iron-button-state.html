@@ -1,0 +1,135 @@
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="iron-control-state.html">
+
+<script>
+
+  Polymer.IronButtonStateBehavior = {
+
+    accessors: {
+
+      /**
+       * If true, the element is currently active either because the
+       * user is touching it, or the button is a toggle
+       * and is currently in the active state.
+       *
+       * @attribute active
+       * @type boolean
+       * @default false
+       */
+      active: {
+        type: Boolean,
+        notify: true,
+        reflectToAttribute: true,
+        observer: '_activeChanged'
+      },
+
+      /**
+       * If true, the user is currently holding down the button.
+       *
+       * @attribute pressed
+       * @type boolean
+       * @default false
+       */
+      pressed: {
+        type: Boolean,
+        readOnly: true,
+        reflectToAttribute: true,
+        observer: '_pressedChanged'
+      },
+
+      /**
+       * If true, the button toggles the active state with each tap.
+       * Otherwise, the button becomes active when the user is holding
+       * it down.
+       *
+       * @attribute toggle
+       * @type boolean
+       * @default false
+       */
+      toggle: {
+        type: Boolean,
+        reflectToAttribute: true
+      }
+
+    },
+
+    listeners: {
+      mousedown: '_downHandler',
+      mouseup: '_upHandler',
+      keydown: '_keyDownHandler',
+      keyup: '_keyUpHandler'
+    },
+
+    ready: function() {
+      this._controlStateChanged();
+    },
+
+    _downHandler: function() {
+      this._setPressed(true);
+    },
+
+    _upHandler: function(e) {
+      this._setPressed(false);
+    },
+
+    _keyDownHandler: function(e) {
+      switch(e.keyCode) {
+        case this.keyCodes.ENTER:
+          this.asyncClick();
+          break;
+        case this.keyCodes.SPACE:
+          this._setPressed(true);
+          break;
+      }
+    },
+
+    _keyUpHandler: function(e) {
+      if (e.keyCode == this.keyCodes.SPACE) {
+        if (this.pressed) {
+          this._asyncClick();
+        }
+        this._setPressed(false);
+      }
+    },
+
+    _asyncClick: function() {
+      this.async(function() {
+        this.click();
+      }, 1);
+    },
+
+    _activeChanged: function() {
+      this._buttonStateChanged();
+    },
+
+    _pressedChanged: function(pressed) {
+      if (this.disabled) {
+        this.active = false;
+      } else if (this.toggle) {
+        if (pressed) {
+          this.active = !this.active;
+        }
+      } else {
+        this.active = pressed;
+      }
+    },
+
+    _controlStateChanged: function() {
+      if (this.disabled) {
+        this._setPressed(false);
+      }
+      this._buttonStateChanged();
+    }
+
+  };
+
+</script>
