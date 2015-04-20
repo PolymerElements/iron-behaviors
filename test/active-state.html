@@ -29,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <test-fixture id="ToggleActiveState">
     <template>
-      <test-button toggle></test-button>
+      <test-button toggles></test-button>
     </template>
   </test-fixture>
 
@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         activeTarget = fixture('TrivialActiveState');
       });
 
-      suite('active state with toggle attribute', function() {
+      suite('active state with toggles attribute', function() {
         setup(function() {
           activeTarget = fixture('ToggleActiveState');
         });
@@ -73,19 +73,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       });
 
-      suite('trivial active state', function() {
+      suite('without toggles attribute', function() {
         suite('when mouse is down', function() {
-          test('target gets an active attribute', function() {
+          test('does not get an active attribute', function() {
             expect(activeTarget.hasAttribute('active')).to.be.eql(false);
             MockInteractions.down(activeTarget);
-            expect(activeTarget.hasAttribute('active')).to.be.eql(true);
+            expect(activeTarget.hasAttribute('active')).to.be.eql(false);
           });
         });
 
         suite('when mouse is up', function() {
-          test('target loses the active attribute', function() {
+          test('does not get an active attribute', function() {
             MockInteractions.down(activeTarget);
-            expect(activeTarget.hasAttribute('active')).to.be.eql(true);
+            expect(activeTarget.hasAttribute('active')).to.be.eql(false);
             MockInteractions.up(activeTarget);
             expect(activeTarget.hasAttribute('active')).to.be.eql(false);
           });
