@@ -83,8 +83,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _keyDownHandler: function(e) {
       switch(e.keyCode) {
-        case this.keyCodes.ENTER:
-          this.asyncClick();
+        case this.keyCodes.ENTER_KEY:
+          this._asyncClick();
           break;
         case this.keyCodes.SPACE:
           this._setPressed(true);
