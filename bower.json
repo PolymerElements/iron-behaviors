@@ -5,6 +5,7 @@
     "polymer": "Polymer/polymer#0.8-preview"
   },
   "devDependencies": {
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.6.0",
     "web-component-tester": "~2.2.3",
     "test-fixture": "polymer/test-fixture#~0.1.0"
   }
