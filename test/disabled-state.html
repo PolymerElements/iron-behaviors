@@ -50,8 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           test('receives an appropriate aria attribute', function() {
             disableTarget.disabled = true;
-            // FIXME(ffu): should it be aria-disabled="true"?
-            expect(disableTarget.getAttribute('aria-disabled')).to.be.eql('');
+            expect(disableTarget.getAttribute('aria-disabled')).to.be.eql('true');
           });
         });
 
@@ -76,8 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('adds `aria-disabled` to the target', function() {
-          // FIXME(ffu): should it be aria-disabled="true"?
-          expect(disableTarget.getAttribute('aria-disabled')).to.be.eql('');
+          expect(disableTarget.getAttribute('aria-disabled')).to.be.eql('true');
         });
       });
     });

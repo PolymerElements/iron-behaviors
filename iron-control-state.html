@@ -56,6 +56,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       blur: '_blurHandler'
     },
 
+    ready: function() {
+      // TODO(sjmiles): ensure read-only property is valued so the compound
+      // observer will fire
+      if (!this._focused) {
+        this._setFocused(false);
+      }
+    },
+
     _focusHandler: function() {
       this._setFocused(true);
     },
@@ -65,13 +73,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _disabledChanged: function(disabled, old) {
-      this.toggleAttribute('aria-disabled', disabled);
+      this.setAttribute('aria-disabled', disabled ? 'true' : 'false');
       this.style.pointerEvents = disabled ? 'none' : '';
-      if (this.disabled) {
+      if (disabled) {
         this._oldTabIndex = this.tabIndex;
         this.focused = false;
         this.tabIndex = -1;
-
       } else if (this._oldTabIndex !== undefined) {
         this.tabIndex = this._oldTabIndex;
       }
