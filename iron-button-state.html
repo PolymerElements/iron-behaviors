@@ -17,22 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     accessors: {
 
       /**
-       * If true, the element is currently active either because the
-       * user is touching it, or the button is a toggle
-       * and is currently in the active state.
-       *
-       * @attribute active
-       * @type boolean
-       * @default false
-       */
-      active: {
-        type: Boolean,
-        notify: true,
-        reflectToAttribute: true,
-        observer: '_activeChanged'
-      },
-
-      /**
        * If true, the user is currently holding down the button.
        *
        * @attribute pressed
@@ -47,17 +31,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       /**
-       * If true, the button toggles the active state with each tap.
-       * Otherwise, the button becomes active when the user is holding
-       * it down.
+       * If true, the button toggles the active state with each tap or press
+       * of the spacebar.
        *
-       * @attribute toggle
+       * @attribute toggles
        * @type boolean
        * @default false
        */
-      toggle: {
+      toggles: {
         type: Boolean,
         reflectToAttribute: true
+      },
+
+      /**
+       * If true, the button is a toggle and is currently in the active state.
+       *
+       * @attribute active
+       * @type boolean
+       * @default false
+       */
+      active: {
+        type: Boolean,
+        notify: true,
+        reflectToAttribute: true,
+        observer: '_activeChanged'
       }
 
     },
@@ -66,11 +63,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       mousedown: '_downHandler',
       mouseup: '_upHandler',
       keydown: '_keyDownHandler',
-      keyup: '_keyUpHandler'
+      keyup: '_keyUpHandler',
+      tap: '_tapHandler'
     },
 
-    ready: function() {
-      this._controlStateChanged();
+    _tapHandler: function() {
+      if (this.toggles) {
+       // a tap is needed to toggle the active state
+        this._userActivate(!this.active);
+      } else {
+        this.active = false;
+      }
+    },
+
+    // to emulate native checkbox, (de-)activations from a user interaction fire
+    // 'change' events
+    _userActivate: function(active) {
+      this.active = active;
+      this.fire('change');
     },
 
     _downHandler: function() {
@@ -86,14 +96,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         case this.keyCodes.ENTER_KEY:
           this._asyncClick();
           break;
+
         case this.keyCodes.SPACE:
           this._setPressed(true);
           break;
+
       }
     },
 
     _keyUpHandler: function(e) {
-      if (e.keyCode == this.keyCodes.SPACE) {
+     if (e.keyCode == this.keyCodes.SPACE) {
         if (this.pressed) {
           this._asyncClick();
         }
@@ -101,34 +113,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     },
 
+    // trigger click asynchronously, the asynchrony is useful to allow one
+    // event handler to unwind before triggering another event
     _asyncClick: function() {
       this.async(function() {
         this.click();
       }, 1);
     },
 
-    _activeChanged: function() {
-      this.toggleAttribute('aria-pressed', this.active);
-      this._buttonStateChanged();
-    },
+    // any of these changes are considered a change to button state
 
     _pressedChanged: function(pressed) {
-      if (this.disabled) {
-        this.active = false;
-      } else if (this.toggle) {
-        if (pressed) {
-          this.active = !this.active;
-        }
-      } else {
-        this.active = pressed;
-      }
+      this._changedButtonState();
+    },
+
+    _activeChanged: function(active) {
+      this.setAttribute('aria-pressed', active ? 'true' : 'false');
+      this._changedButtonState();
     },
 
     _controlStateChanged: function() {
       if (this.disabled) {
         this._setPressed(false);
+        this.active = false;
+      } else {
+        this._changedButtonState();
       }
-      this._buttonStateChanged();
+    },
+
+    // provide hook for follow-on behaviors to react to button-state
+
+    _changedButtonState: function() {
+      if (this._buttonStateChanged) {
+        this._buttonStateChanged(); // abstract
+      }
     }
 
   };
