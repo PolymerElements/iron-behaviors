@@ -59,7 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     ready: function() {
       // TODO(sjmiles): ensure read-only property is valued so the compound
       // observer will fire
-      if (!this._focused) {
+      if (this.focused === undefined) {
         this._setFocused(false);
       }
     },
