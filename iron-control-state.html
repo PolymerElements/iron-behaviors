@@ -47,9 +47,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     },
 
-    observers: {
-      'focused disabled': '_changedControlState'
-    },
+    observers: [
+      '_changedControlState(focused, disabled)'
+    ],
 
     listeners: {
       focus: '_focusHandler',
