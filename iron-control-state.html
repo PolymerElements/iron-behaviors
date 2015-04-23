@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <script>
 
-  Polymer.IronControlStateBehavior = {
+  Polymer.IronControlState = {
 
     properties: {
 
@@ -43,8 +43,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         notify: true,
         observer: '_disabledChanged',
         reflectToAttribute: true
-      }
+      },
 
+      _oldTabIndex: {
+        type: String
+      }
     },
 
     observers: [
