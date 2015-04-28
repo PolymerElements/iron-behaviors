@@ -72,7 +72,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        // a tap is needed to toggle the active state
         this._userActivate(!this.active);
       } else {
-        this.active = false;
+        // if the element cannot be toggled, then it cannot be deactivated once
+        // it has been tapped and activated
+        this.active = true;
       }
     },
 
