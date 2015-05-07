@@ -59,12 +59,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         Polymer.IronButtonState
       ],
 
-      ready: function() {
-        if (!this.hasAttribute('role')) {
-          this.setAttribute('role', 'button');
-        }
+      hostAttributes: {
+        role: 'button'
       }
-
     });
 
   </script>
