@@ -9,12 +9,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 <link rel="import" href="iron-control-state.html">
 
 <script>
 
   /** @polymerBehavior */
-  Polymer.IronButtonState = {
+  Polymer.IronButtonState = [Polymer.IronA11yKeysBehavior, {
 
     properties: {
 
@@ -64,9 +65,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     listeners: {
       down: '_downHandler',
       up: '_upHandler',
-      keydown: '_keyDownHandler',
-      keyup: '_keyUpHandler',
       tap: '_tapHandler'
+    },
+
+    keyBindings: {
+      'enter:keydown': '_asyncClick',
+      'space:keydown': '_downHandler',
+      'space:keyup': '_spaceKeyUpHandler',
     },
 
     _tapHandler: function() {
@@ -93,26 +98,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this._setPressed(false);
     },
 
-    _keyDownHandler: function(e) {
-      switch(e.keyCode) {
-        case this.keyCodes.ENTER_KEY:
-          this._asyncClick();
-          break;
-
-        case this.keyCodes.SPACE:
-          this._setPressed(true);
-          break;
-
+    _spaceKeyUpHandler: function(e) {
+      if (this.pressed) {
+        this._asyncClick();
       }
-    },
-
-    _keyUpHandler: function(e) {
-     if (e.keyCode == this.keyCodes.SPACE) {
-        if (this.pressed) {
-          this._asyncClick();
-        }
-        this._setPressed(false);
-      }
+      this._setPressed(false);
     },
 
     // trigger click asynchronously, the asynchrony is useful to allow one
@@ -151,6 +141,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     }
 
-  };
+  }];
 
 </script>
