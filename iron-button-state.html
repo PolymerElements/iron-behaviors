@@ -58,8 +58,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         notify: true,
         reflectToAttribute: true,
         observer: '_activeChanged'
-      }
+      },
 
+      /**
+       * True if the element is currently being pressed by a "pointer," which
+       * is loosely defined as mouse or touch input (but specifically excluding
+       * keyboard input).
+       */
+      pointerDown: {
+        type: Boolean,
+        readOnly: true,
+        value: false
+      }
     },
 
     listeners: {
@@ -70,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     keyBindings: {
       'enter:keydown': '_asyncClick',
-      'space:keydown': '_downHandler',
+      'space:keydown': '_spaceKeyDownHandler',
       'space:keyup': '_spaceKeyUpHandler',
     },
 
@@ -91,16 +101,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _downHandler: function() {
+      this._setPointerDown(true);
       this._setPressed(true);
-      this._setFocused(true);
     },
 
     _upHandler: function(e) {
+      this._setPointerDown(false);
       this._setPressed(false);
-      this._setFocused(false);
     },
 
-    _spaceKeyUpHandler: function(e) {
+    _spaceKeyDownHandler: function() {
+      this._setPressed(true);
+    },
+
+    _spaceKeyUpHandler: function() {
       if (this.pressed) {
         this._asyncClick();
       }
