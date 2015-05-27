@@ -152,7 +152,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _activeChanged: function(active) {
-      this.setAttribute('aria-pressed', active ? 'true' : 'false');
+      if (this.toggles) {
+        this.setAttribute('aria-pressed', active ? 'true' : 'false');
+      } else {
+        this.removeAttribute('aria-pressed');
+      }
       this._changedButtonState();
     },
 
