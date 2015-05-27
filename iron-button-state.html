@@ -29,6 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       pressed: {
         type: Boolean,
         readOnly: true,
+        value: false,
         reflectToAttribute: true,
         observer: '_pressedChanged'
       },
@@ -43,6 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       toggles: {
         type: Boolean,
+        value: false,
         reflectToAttribute: true
       },
 
@@ -55,6 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       active: {
         type: Boolean,
+        value: false,
         notify: true,
         reflectToAttribute: true,
         observer: '_activeChanged'
@@ -69,6 +72,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         type: Boolean,
         readOnly: true,
         value: false
+      },
+
+      /**
+       * True if the input device that caused the element to receive focus
+       * was a keyboard.
+       */
+      receivedFocusFromKeyboard: {
+        type: Boolean,
+        computed: '_computeReceivedFocusFromKeyboard(focused)'
       }
     },
 
@@ -91,6 +103,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       } else {
         this.active = false;
       }
+    },
+
+    _computeReceivedFocusFromKeyboard: function(focused) {
+      return !this.pointerDown && focused;
     },
 
     // to emulate native checkbox, (de-)activations from a user interaction fire
