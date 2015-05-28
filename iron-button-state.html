@@ -80,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       receivedFocusFromKeyboard: {
         type: Boolean,
-        computed: '_computeReceivedFocusFromKeyboard(focused)'
+        readOnly: true
       }
     },
 
@@ -89,6 +89,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       up: '_upHandler',
       tap: '_tapHandler'
     },
+
+    observers: [
+      '_detectKeyboardFocus(focused)'
+    ],
 
     keyBindings: {
       'enter:keydown': '_asyncClick',
@@ -105,8 +109,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     },
 
-    _computeReceivedFocusFromKeyboard: function(focused) {
-      return !this.pointerDown && focused;
+    _detectKeyboardFocus: function(focused) {
+      this._setReceivedFocusFromKeyboard(!this.pointerDown && focused);
     },
 
     // to emulate native checkbox, (de-)activations from a user interaction fire
@@ -119,6 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     _downHandler: function() {
       this._setPointerDown(true);
       this._setPressed(true);
+      this._setReceivedFocusFromKeyboard(false);
     },
 
     _upHandler: function(e) {
