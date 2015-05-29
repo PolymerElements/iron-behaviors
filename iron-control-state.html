@@ -12,18 +12,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <script>
 
-  /** @polymerBehavior */
-
+  /**
+   * @demo demo/index.html
+   * @polymerBehavior
+   */
   Polymer.IronControlState = {
 
     properties: {
 
       /**
        * If true, the element currently has focus.
-       *
-       * @attribute focused
-       * @type boolean
-       * @default false
        */
       focused: {
         type: Boolean,
@@ -35,10 +33,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       /**
        * If true, the user cannot interact with this element.
-       *
-       * @attribute disabled
-       * @type boolean
-       * @default false
        */
       disabled: {
         type: Boolean,
