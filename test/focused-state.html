@@ -98,7 +98,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // setTimeout to wait for potentially more, erroneous events
           setTimeout(function() {
             assert.equal(nFocusEvents, 1, 'one focus event fired');
-            focusable.$.input.blur();
+            MockInteractions.blur(focusable.$.input);
           });
         });
         focusable.addEventListener('blur', function() {
@@ -109,7 +109,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             done();
           });
         });
-        focusable.$.input.focus();
+        MockInteractions.focus(focusable.$.input);
       });
 
     });

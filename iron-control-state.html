@@ -75,7 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._setFocused(focused);
       } else if (!this.shadowRoot) {
         event.stopPropagation();
-        this.fire(event.type, {originalEvent: event}, {
+        this.fire(event.type, {sourceEvent: event}, {
           node: this,
           bubbles: event.bubbles,
           cancelable: event.cancelable
