@@ -167,6 +167,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       keyboardEvent.preventDefault();
       keyboardEvent.stopImmediatePropagation();
       this._setPressed(true);
+      this._handleSpaceKey(true, event);
     },
 
     _spaceKeyUpHandler: function() {
@@ -174,7 +175,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._asyncClick();
       }
       this._setPressed(false);
+      this._handleSpaceKey(false, event);
     },
+
+    // abstract protected
+    _handleSpaceKey: function(isDown, keyEvent) {},
 
     // trigger click asynchronously, the asynchrony is useful to allow one
     // event handler to unwind before triggering another event
