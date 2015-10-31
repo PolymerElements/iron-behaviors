@@ -2,7 +2,7 @@
 <!---
 
 This README is automatically generated from the comments in these files:
-iron-button-state.html  iron-control-state.html
+iron-control-state.html  iron-button-state.html
 
 Edit those files, and our readme bot will duplicate them over here!
 Edit this file, and the bot will squash your changes :)
@@ -14,6 +14,6 @@ Edit this file, and the bot will squash your changes :)
 _[Demo and API Docs](https://elements.polymer-project.org/elements/iron-behaviors)_
 
 
-<!-- No docs for Polymer.IronButtonState found. -->
-
 <!-- No docs for Polymer.IronControlState found. -->
+
+<!-- No docs for Polymer.IronButtonState found. -->
