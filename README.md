@@ -14,6 +14,6 @@ Edit this file, and the bot will squash your changes :)
 _[Demo and API Docs](https://elements.polymer-project.org/elements/iron-behaviors)_
 
 
-<!-- No docs for Polymer.IronControlState found. -->
-
 <!-- No docs for Polymer.IronButtonState found. -->
+
+<!-- No docs for Polymer.IronControlState found. -->
