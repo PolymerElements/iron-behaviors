@@ -73,12 +73,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       if (event.target === this) {
         this._setFocused(event.type === 'focus');
-      } else if (!this.shadowRoot && !this.isLightDescendant(event.target)) {
-        this.fire(event.type, {sourceEvent: event}, {
-          node: this,
-          bubbles: event.bubbles,
-          cancelable: event.cancelable
-        });
+      } else if (!this.shadowRoot && this.root) {
+        var ownerRoot = Polymer.dom(event.target).getOwnerRoot();
+
+        while (ownerRoot && ownerRoot !== this.root) {
+          ownerRoot = Polymer.dom(ownerRoot.host).getOwnerRoot();
+        }
+
+        if (ownerRoot === this.root) {
+          this.fire(event.type, {sourceEvent: event}, {
+            bubbles: event.bubbles,
+            cancelable: event.cancelable
+          });
+        }
       }
     },
 

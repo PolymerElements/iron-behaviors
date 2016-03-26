@@ -89,3 +89,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
 </script>
+
+<dom-module id="control-with-shadow-input">
+  <template>
+    <input id="shadowInput">
+  </template>
+  <script>
+    Polymer({
+      is: 'control-with-shadow-input',
+
+      behaviors: [
+        Polymer.IronControlState,
+        Polymer.IronButtonState
+      ]
+    });
+  </script>
+</dom-module>
