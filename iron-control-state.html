@@ -11,6 +11,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 
 <script>
+function documentFocusListener(event) {
+  console.log('element focus');
+  event._focusRestoredToWindow = true;
+  document.removeEventListener('focus', documentFocusListener);
+}
+window.addEventListener('focus', function(event) {
+  console.log('window focus');
+  setTimeout(function() {
+    console.log('window focus timeout');
+  });
+});
+window.addEventListener('blur', function(event) {
+  console.log('window blur');
+  document.addEventListener('focus', documentFocusListener, true);
+});
 
   /**
    * @demo demo/index.html
@@ -40,6 +55,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         notify: true,
         observer: '_disabledChanged',
         reflectToAttribute: true
+      },
+
+      /**
+       * True if the action that caused the element to receive focus was the
+       * top-level tab/window having focused restored to it.
+       */
+      receivedFocusViaWindowRestore: {
+        type: Boolean,
+        readOnly: true
       },
 
       _oldTabIndex: {
@@ -72,7 +96,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // handled). In either case, we can disregard `event.path`.
 
       if (event.target === this) {
-        this._setFocused(event.type === 'focus');
+        console.log(this.textContent.trim() + ' ' + event.type + ' ' + event._focusRestoredToWindow);
+        var focused = (event.type === 'focus');
+        this._setReceivedFocusViaWindowRestore(event._focusRestoredToWindow || false);
+        this._setFocused(focused);
       } else if (!this.shadowRoot) {
         var target = /** @type {Node} */(Polymer.dom(event).localTarget);
         if (!this.isLightDescendant(target)) {

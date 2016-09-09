@@ -113,7 +113,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _detectKeyboardFocus: function(focused) {
-      this._setReceivedFocusFromKeyboard(!this.pointerDown && focused);
+      console.log(this.textContent.trim() + ' detectKeyboardFocus: ' + focused + ' ' + this.pointerDown + ' ' + this.receivedFocusViaWindowRestore);
+      if (focused && !this.receivedFocusViaWindowRestore) {
+        this._setReceivedFocusFromKeyboard(!this.pointerDown);
+      }
     },
 
     // to emulate native checkbox, (de-)activations from a user interaction fire
