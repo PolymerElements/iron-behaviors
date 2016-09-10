@@ -13,6 +13,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="iron-control-state.html">
 
 <script>
+(function () {
+
+  var processingWindowFocusEvent = false;
+  var lastKeyboardFocusedElement;
 
   /**
    * @demo demo/index.html
@@ -112,10 +116,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     },
 
+    // Heuristically determine whether this element received the focus via
+    // the keyboard. In most situations, we infer that, if the pointer isn't
+    // currently down, then the user must have moved the focus with the
+    // keyboard.
     _detectKeyboardFocus: function(focused) {
-      console.log(this.textContent.trim() + ' detectKeyboardFocus: ' + focused + ' ' + this.pointerDown + ' ' + this.receivedFocusViaWindowRestore);
-      if (focused && !this.receivedFocusViaWindowRestore) {
-        this._setReceivedFocusFromKeyboard(!this.pointerDown);
+      if (focused) {
+        // One special case is when the user is moving focus back to the current
+        // window. When a window blurs, the active element will blur too. If the
+        // user later restores focus to the window, the element will get a focus
+        // event again. If that element had previously been focused with the
+        // keyboard, we want to reestablish its receivedFocusFromKeyboard flag.
+        // This allows a keyboard user to once again see where the focus is
+        // without having to begin tabbing around.
+        var keyboard = processingWindowFocusEvent ?
+          (this === lastKeyboardFocusedElement) : // Keyboard used originally
+          !this.pointerDown;                      // Keyboard in use right now
+
+        this._setReceivedFocusFromKeyboard(keyboard);
+
+        // If the keyboard was used, remember this element so that, if the
+        // window suddenly loses and then regains focus, we can tell whether to
+        // reestablish the keyboard flag (above).
+        lastKeyboardFocusedElement = keyboard ? this : null;
+      } else {
+        this._setReceivedFocusFromKeyboard(false);
       }
     },
 
@@ -132,6 +157,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this._setPointerDown(true);
       this._setPressed(true);
       this._setReceivedFocusFromKeyboard(false);
+      lastKeyboardFocusedElement = null;
     },
 
     _upHandler: function() {
@@ -228,4 +254,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer.IronButtonStateImpl
   ];
 
+  /*
+   * Set a flag we can use to detect when an element is receiving a focus event
+   * because the window has been refocused.
+   */
+  window.addEventListener('focus', function(event) {
+    // This point is reached before the element that will regain the focus will
+    // receive its focus event.
+    processingWindowFocusEvent = true;
+    setTimeout(function() {
+      // If an element has regained the focus, this point will be reached after
+      // that element's focus event.
+      processingWindowFocusEvent = false;
+    });
+  });
+
+})();
 </script>
