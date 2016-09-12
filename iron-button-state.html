@@ -100,7 +100,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     ],
 
     keyBindings: {
-      'enter:keydown': '_asyncClick',
+      'enter:keydown': '_enterKeyDownHandler',
       'space:keydown': '_spaceKeyDownHandler',
       'space:keyup': '_spaceKeyUpHandler',
     },
@@ -132,14 +132,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var keyboard = processingWindowFocusEvent ?
           (this === lastKeyboardFocusedElement) : // Keyboard used originally
           !this.pointerDown;                      // Keyboard in use right now
-
-        this._setReceivedFocusFromKeyboard(keyboard);
-
-        // If the keyboard was used, remember this element so that, if the
-        // window suddenly loses and then regains focus, we can tell whether to
-        // reestablish the keyboard flag (above).
-        lastKeyboardFocusedElement = keyboard ? this : null;
+        this._trackKeyboardFocusedElement(keyboard);
       } else {
+        // Update this element's keyboard focus state. Since the element's
+        // losing focus, not gaining it, we don't update our notion of which
+        // element last received focus via the keyboard.
         this._setReceivedFocusFromKeyboard(false);
       }
     },
@@ -156,13 +153,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     _downHandler: function(event) {
       this._setPointerDown(true);
       this._setPressed(true);
-      this._setReceivedFocusFromKeyboard(false);
-      lastKeyboardFocusedElement = null;
+      this._trackKeyboardFocusedElement(false);
     },
 
     _upHandler: function() {
       this._setPointerDown(false);
       this._setPressed(false);
+    },
+
+    _trackKeyboardFocusedElement: function(receivedFocusFromKeyboard) {
+      this._setReceivedFocusFromKeyboard(receivedFocusFromKeyboard);
+
+      // If the keyboard was used, remember this element so that, if the
+      // window suddenly loses and then regains focus, we can tell whether to
+      // reestablish the keyboard flag in _detectKeyboardFocus.
+      lastKeyboardFocusedElement = receivedFocusFromKeyboard ? this : null;
+    },
+
+    /**
+     * @param {!KeyboardEvent} event .
+     */
+    _enterKeyDownHandler: function(event) {
+      this._trackKeyboardFocusedElement(true);
+      this._asyncClick();
     },
 
     /**
@@ -179,6 +192,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       keyboardEvent.preventDefault();
       keyboardEvent.stopImmediatePropagation();
+      this._trackKeyboardFocusedElement(true);
       this._setPressed(true);
     },
 
