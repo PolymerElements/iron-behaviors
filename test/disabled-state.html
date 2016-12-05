@@ -26,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <test-fixture id="InitiallyDisabledState">
     <template>
-      <test-control disabled></test-control>
+      <test-control role="slider" disabled></test-control>
     </template>
   </test-fixture>
 
@@ -45,9 +45,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             expect(disableTarget.hasAttribute('disabled')).to.be.eql(true);
           });
 
-          test('receives an appropriate aria attribute', function() {
+          test('sets aria-disabled when a role is set', function() {
+            expect(disableTarget.getAttribute('aria-disabled')).to.be.null;
             disableTarget.disabled = true;
-            expect(disableTarget.getAttribute('aria-disabled')).to.be.eql('true');
+            expect(disableTarget.getAttribute('aria-disabled')).to.be.null;
+
+            disableTarget.setAttribute('role', 'dialog');
+            disableTarget.disabled = false;
+            expect(disableTarget.getAttribute('aria-disabled')).to.be.eql('false');
           });
         });
 

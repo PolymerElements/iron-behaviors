@@ -86,7 +86,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _disabledChanged: function(disabled, old) {
-      this.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+      // set the `aria-disabled` attribute only when a `role` was set.
+      if (this.hasAttribute('role')) {
+        this.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+      }
       this.style.pointerEvents = disabled ? 'none' : '';
       if (disabled) {
         this._oldTabIndex = this.tabIndex;
