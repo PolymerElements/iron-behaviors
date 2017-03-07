@@ -16,26 +16,18 @@
   ],
   "license": "http://polymer.github.io/LICENSE.txt",
   "dependencies": {
-    "polymer": "polymer/polymer#2.0-preview",
+    "polymer": "polymer/polymer#^2.0.0-rc.1",
     "iron-a11y-keys-behavior": "polymerelements/iron-a11y-keys-behavior#2.0-preview"
   },
   "devDependencies": {
     "paper-styles": "polymerelements/paper-styles#2.0-preview",
     "iron-test-helpers": "polymerelements/iron-test-helpers#2.0-preview",
-    "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
+    "iron-component-page": "polymerelements/iron-component-page#2.0-preview",
     "test-fixture": "PolymerElements/test-fixture#^3.0.0-rc.1",
     "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.6",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.1"
   },
   "ignore": [],
-  "resolutions": {
-    "webcomponentsjs": "v1",
-    "iron-a11y-keys-behavior": "2.0-preview",
-    "test-fixture": "^2.0.0",
-    "polymer": "2.0-preview",
-    "paper-styles": "2.0-preview",
-    "iron-flex-layout": "2.0-preview"
-  },
   "variants": {
     "1.x": {
       "dependencies": {
