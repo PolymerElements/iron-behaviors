@@ -56,10 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       __handleEventRetargetting: {
         type: Boolean,
         value: function() {
-          // NOTE(cdata): Polymer 2.0 hybrid mode should take care of messy
-          // focus event retargetting for us.
-          return !this.shadowRoot &&
-              /^1\.[0-9]+\.[0-9]+/.test(Polymer.version);
+          return !this.shadowRoot && !Polymer.Element;
         }
       }
     },
