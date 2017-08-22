@@ -1,0 +1,19 @@
+{
+  "name": "@polymer/iron-behaviors",
+  "flat": true,
+  "version": "3.0.0-pre.1",
+  "description": "Provides a set of behaviors for the iron elements",
+  "contributors": [
+    "The Polymer Authors"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PolymerElements/iron-behaviors.git"
+  },
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0-pre.1",
+    "@polymer/iron-a11y-keys-behavior": "^3.0.0-pre.1"
+  },
+  "devDependencies": {}
+}
