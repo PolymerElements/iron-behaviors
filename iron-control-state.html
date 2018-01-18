@@ -71,8 +71,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _focusBlurHandler: function(event) {
-      // In Polymer 2.0, the library takes care of retargeting events.
-      if (Polymer.Element) {
+      // In Polymer 2.0, the library takes care of retargeting events, except
+      // for IE11, where it can't (because of relatedTarget issues)
+      var isIE11 = /Trident/.test(navigator.userAgent);
+      if (Polymer.Element && !isIE11) {
         this._setFocused(event.type === 'focus');
         return;
       }
