@@ -51,13 +51,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         value: function() {
           return this._focusBlurHandler.bind(this);
         }
-      },
-
-      __handleEventRetargeting: {
-        type: Boolean,
-        value: function() {
-          return !this.shadowRoot && !Polymer.Element;
-        }
       }
     },
 
@@ -71,11 +64,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _focusBlurHandler: function(event) {
-      // In Polymer 2.0, the library takes care of retargeting events.
-      if (Polymer.Element) {
+      // In Polymer 2.0, the library takes care of retargeting events, except
+      // for IE11, where it can't (because of relatedTarget issues)
+      var isIE11 = /Trident/.test(navigator.userAgent);
+      if (Polymer.Element && !isIE11) {
         this._setFocused(event.type === 'focus');
         return;
       }
+
+      console.log('doing a retargetting');
 
       // NOTE(cdata):  if we are in ShadowDOM land, `event.target` will
       // eventually become `this` due to retargeting; if we are not in
@@ -84,7 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // handled). In either case, we can disregard `event.path`.
       if (event.target === this) {
         this._setFocused(event.type === 'focus');
-      } else if (this.__handleEventRetargeting) {
+      } else if (!this.shadowRoot) {
         var target = /** @type {Node} */(Polymer.dom(event).localTarget);
         if (!this.isLightDescendant(target)) {
           this.fire(event.type, {sourceEvent: event}, {
