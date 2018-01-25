@@ -1,0 +1,10 @@
+{
+  "name": "@polymer/iron-behaviors",
+  "private": true,
+  "description": "Provides a set of behaviors for the iron elements",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PolymerElements/iron-behaviors.git"
+  },
+  "license": "http://polymer.github.io/LICENSE.txt"
+}
