@@ -30,6 +30,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="TabIndexDisabledState">
+    <template>
+      <test-control></test-control>
+    </template>
+  </test-fixture>
+
   <script>
     suite('disabled-state', function() {
       var disableTarget;
@@ -73,6 +79,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         test('adds `aria-disabled` to the target', function() {
           expect(disableTarget.getAttribute('aria-disabled')).to.be.eql('true');
+        });
+      });
+
+      suite('tabindex', function() {
+        setup(function() {
+          disableTarget = fixture('TabIndexDisabledState');
+        });
+
+        test('does not leave tabindex="-1" after toggling disabled', function() {
+          disableTarget.disabled = true;
+          disableTarget.disabled = false;
+          expect(disableTarget.hasAttribute('tabindex')).to.be.eql(false);
+        });
+
+        test('restores original tabindex after toggling disabled', function() {
+          disableTarget.tabIndex = '0';
+          disableTarget.disabled = true;
+          disableTarget.disabled = false;
+          expect(disableTarget.getAttribute('tabindex')).to.be.eql('0');
         });
       });
     });

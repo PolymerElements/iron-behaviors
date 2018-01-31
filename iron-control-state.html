@@ -100,12 +100,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.setAttribute('aria-disabled', disabled ? 'true' : 'false');
       this.style.pointerEvents = disabled ? 'none' : '';
       if (disabled) {
-        this._oldTabIndex = this.tabIndex;
+        // We need to read `tabindex` from the attribute. The `tabindex`
+        // property returns `-1` if there is no `tabindex` attribute. And the
+        // distinction is important when `disabled` is changed back to `false`.
+        this._oldTabIndex = this.getAttribute('tabindex');
         this._setFocused(false);
         this.tabIndex = -1;
         this.blur();
-      } else if (this._oldTabIndex !== undefined) {
-        this.tabIndex = this._oldTabIndex;
+      } else {
+        if (this._oldTabIndex) {
+          this.tabIndex = this._oldTabIndex;
+        } else {
+          // If there was no `tabindex` attribute, we need to remove it.
+          // Leaving `tabindex="-1"` causes focusable elements in the shadow
+          // tree to be skipped in the tab order. 
+          this.removeAttribute('tabindex');
+        }
       }
     },
 
