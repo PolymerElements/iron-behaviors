@@ -100,6 +100,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.setAttribute('aria-disabled', disabled ? 'true' : 'false');
       this.style.pointerEvents = disabled ? 'none' : '';
       if (disabled) {
+        // We need to read `tabindex` from the attribute. The `tabindex`
+        // property returns `-1` if there is no `tabindex` attribute. And the
+        // distintion is important when `disabled` is changed back to `false`.
         this._oldTabIndex = this.getAttribute('tabindex');
         this._setFocused(false);
         this.tabIndex = -1;
