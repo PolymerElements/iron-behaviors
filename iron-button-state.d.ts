@@ -14,7 +14,7 @@
 
 declare namespace Polymer {
 
-  interface IronButtonState {
+  interface IronButtonState extends Polymer.IronA11yKeysBehavior {
     keyBindings: object|null;
 
     /**
