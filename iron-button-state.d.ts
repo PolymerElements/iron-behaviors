@@ -15,7 +15,7 @@
 declare namespace Polymer {
 
   interface IronButtonState extends Polymer.IronA11yKeysBehavior {
-    keyBindings: object|null;
+    keyBindings: object;
 
     /**
      * If true, the user is currently holding down the button.
