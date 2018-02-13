@@ -25,7 +25,7 @@ declare namespace Polymer {
     disabled: boolean|null|undefined;
     _oldTabIndex: number|null|undefined;
     _boundFocusBlurHandler: Function|null|undefined;
-    ready(): any;
+    ready(): void;
     _focusBlurHandler(event: any): any;
     _disabledChanged(disabled: any, old: any): any;
     _changedControlState(): any;
