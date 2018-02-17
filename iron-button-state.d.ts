@@ -52,36 +52,36 @@ declare namespace Polymer {
      */
     ariaActiveAttribute: string|null|undefined;
     _mouseEventRe: RegExp|null;
-    _tapHandler(): any;
-    _focusChanged(focused: any): any;
-    _detectKeyboardFocus(focused: any): any;
+    _tapHandler(): void;
+    _focusChanged(focused: any): void;
+    _detectKeyboardFocus(focused: any): void;
 
     /**
      * 'change' events
      */
-    _userActivate(active: any): any;
-    _downHandler(event: any): any;
-    _upHandler(): any;
+    _userActivate(active: any): void;
+    _downHandler(event: any): void;
+    _upHandler(): void;
 
     /**
      * @param event .
      */
-    _spaceKeyDownHandler(event: KeyboardEvent): any;
+    _spaceKeyDownHandler(event: KeyboardEvent): void;
 
     /**
      * @param event .
      */
-    _spaceKeyUpHandler(event: KeyboardEvent): any;
+    _spaceKeyUpHandler(event: KeyboardEvent): void;
 
     /**
      * event handler to unwind before triggering another event
      */
-    _asyncClick(): any;
-    _pressedChanged(pressed: any): any;
-    _ariaActiveAttributeChanged(value: any, oldValue: any): any;
-    _activeChanged(active: any, ariaActiveAttribute: any): any;
-    _controlStateChanged(): any;
-    _changedButtonState(): any;
+    _asyncClick(): void;
+    _pressedChanged(pressed: any): void;
+    _ariaActiveAttributeChanged(value: any, oldValue: any): void;
+    _activeChanged(active: any, ariaActiveAttribute: any): void;
+    _controlStateChanged(): void;
+    _changedButtonState(): void;
   }
 
   const IronButtonState: object;

@@ -26,9 +26,9 @@ declare namespace Polymer {
     _oldTabIndex: number|null|undefined;
     _boundFocusBlurHandler: Function|null|undefined;
     ready(): void;
-    _focusBlurHandler(event: any): any;
-    _disabledChanged(disabled: any, old: any): any;
-    _changedControlState(): any;
+    _focusBlurHandler(event: any): void;
+    _disabledChanged(disabled: any, old: any): void;
+    _changedControlState(): void;
   }
 
   const IronControlState: object;
