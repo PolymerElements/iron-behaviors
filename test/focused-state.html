@@ -115,7 +115,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         expect(nBlurEvents).to.be.greaterThan(0);
         expect(nFocusEvents).to.be.greaterThan(0);
       });
-
     });
 
 
@@ -125,8 +124,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       setup(function() {
         lightDOM = fixture('LightDOM');
         input = Polymer.dom(lightDOM).querySelector('#input');
-        lightDescendantShadowInput = Polymer.dom(lightDOM)
-            .querySelector('nested-focusable').$.input;
+        lightDescendantShadowInput =
+            Polymer.dom(lightDOM).querySelector('nested-focusable').$.input;
       });
 
       test('should not fire the focus event', function() {
@@ -152,9 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         expect(nFocusEvents).to.be.equal(0);
       });
-
     });
-
   </script>
 
 </body>

@@ -13,7 +13,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="iron-control-state.html">
 
 <script>
-
   /**
    * @demo demo/index.html
    * @polymerBehavior Polymer.IronButtonState
@@ -37,41 +36,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * If true, the button toggles the active state with each tap or press
        * of the spacebar.
        */
-      toggles: {
-        type: Boolean,
-        value: false,
-        reflectToAttribute: true
-      },
+      toggles: {type: Boolean, value: false, reflectToAttribute: true},
 
       /**
        * If true, the button is a toggle and is currently in the active state.
        */
-      active: {
-        type: Boolean,
-        value: false,
-        notify: true,
-        reflectToAttribute: true
-      },
+      active:
+          {type: Boolean, value: false, notify: true, reflectToAttribute: true},
 
       /**
        * True if the element is currently being pressed by a "pointer," which
        * is loosely defined as mouse or touch input (but specifically excluding
        * keyboard input).
        */
-      pointerDown: {
-        type: Boolean,
-        readOnly: true,
-        value: false
-      },
+      pointerDown: {type: Boolean, readOnly: true, value: false},
 
       /**
        * True if the input device that caused the element to receive focus
        * was a keyboard.
        */
-      receivedFocusFromKeyboard: {
-        type: Boolean,
-        readOnly: true
-      },
+      receivedFocusFromKeyboard: {type: Boolean, readOnly: true},
 
       /**
        * The aria attribute to be set if the button is a toggle and in the
@@ -84,16 +68,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     },
 
-    listeners: {
-      down: '_downHandler',
-      up: '_upHandler',
-      tap: '_tapHandler'
-    },
+    listeners: {down: '_downHandler', up: '_upHandler', tap: '_tapHandler'},
 
-    observers: [
-      '_focusChanged(focused)',
-      '_activeChanged(active, ariaActiveAttribute)'
-    ],
+    observers:
+        ['_focusChanged(focused)', '_activeChanged(active, ariaActiveAttribute)'],
 
     /**
      * @type {!Object}
@@ -108,7 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _tapHandler: function() {
       if (this.toggles) {
-       // a tap is needed to toggle the active state
+        // a tap is needed to toggle the active state
         this._userActivate(!this.active);
       } else {
         this.active = false;
@@ -156,7 +134,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       // Ignore the event if this is coming from a focused light child, since that
       // element will deal with it.
-      if (this.isLightDescendant(/** @type {Node} */(target)))
+      if (this.isLightDescendant(/** @type {Node} */ (target)))
         return;
 
       keyboardEvent.preventDefault();
@@ -173,7 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       // Ignore the event if this is coming from a focused light child, since that
       // element will deal with it.
-      if (this.isLightDescendant(/** @type {Node} */(target)))
+      if (this.isLightDescendant(/** @type {Node} */ (target)))
         return;
 
       if (this.pressed) {
@@ -204,8 +182,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _activeChanged: function(active, ariaActiveAttribute) {
       if (this.toggles) {
-        this.setAttribute(this.ariaActiveAttribute,
-                          active ? 'true' : 'false');
+        this.setAttribute(this.ariaActiveAttribute, active ? 'true' : 'false');
       } else {
         this.removeAttribute(this.ariaActiveAttribute);
       }
@@ -224,16 +201,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _changedButtonState: function() {
       if (this._buttonStateChanged) {
-        this._buttonStateChanged(); // abstract
+        this._buttonStateChanged();  // abstract
       }
     }
 
   };
 
   /** @polymerBehavior */
-  Polymer.IronButtonState = [
-    Polymer.IronA11yKeysBehavior,
-    Polymer.IronButtonStateImpl
-  ];
-
+  Polymer.IronButtonState =
+      [Polymer.IronA11yKeysBehavior, Polymer.IronButtonStateImpl];
 </script>

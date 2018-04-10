@@ -54,21 +54,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-
     Polymer({
 
       is: 'simple-button',
 
-      behaviors: [
-        Polymer.IronControlState,
-        Polymer.IronButtonState
-      ],
+      behaviors: [Polymer.IronControlState, Polymer.IronButtonState],
 
-      hostAttributes: {
-        role: 'button'
-      }
+      hostAttributes: {role: 'button'}
     });
-
   </script>
 
 </dom-module>

@@ -83,7 +83,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 try {
                   expect(activeTarget.hasAttribute('active')).to.be.eql(false);
                   expect(activeTarget.hasAttribute('aria-pressed')).to.be.eql(true);
-                  expect(activeTarget.getAttribute('aria-pressed')).to.be.eql('false');
+                  expect(activeTarget.getAttribute('aria-pressed'))
+                      .to.be.eql('false');
                   done();
                 } catch (e) {
                   done(e);
@@ -214,20 +215,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       suite('nested native input inside button', function() {
-        test('space in light child input does not trigger a button click event', function(done) {
-          var item = fixture('ButtonWithNativeInput');
-          var input = item.querySelector('#input');
+        test(
+            'space in light child input does not trigger a button click event',
+            function(done) {
+              var item = fixture('ButtonWithNativeInput');
+              var input = item.querySelector('#input');
 
-          var itemClickHandler = sinon.spy();
-          item.addEventListener('click', itemClickHandler);
+              var itemClickHandler = sinon.spy();
+              item.addEventListener('click', itemClickHandler);
 
-          input.focus();
-          MockInteractions.pressSpace(input);
-          Polymer.Base.async(function(){
-            expect(itemClickHandler.callCount).to.be.equal(0);
-            done();
-          }, 1);
-        });
+              input.focus();
+              MockInteractions.pressSpace(input);
+              Polymer.Base.async(function() {
+                expect(itemClickHandler.callCount).to.be.equal(0);
+                done();
+              }, 1);
+            });
 
         test('space in button triggers a button click event', function(done) {
           var item = fixture('ButtonWithNativeInput');
@@ -238,10 +241,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           MockInteractions.pressSpace(item);
 
-          Polymer.Base.async(function(){
+          Polymer.Base.async(function() {
             // You need two ticks, one for the MockInteractions event, and one
             // for the button event.
-            Polymer.Base.async(function(){
+            Polymer.Base.async(function() {
               expect(itemClickHandler.callCount).to.be.equal(1);
               done();
             }, 1);
@@ -250,20 +253,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       suite('nested paper-input inside button', function() {
-        test('space in light child input does not trigger a button click event', function(done) {
-          var item = fixture('ButtonWithPaperInput');
-          var input = item.querySelector('#input');
+        test(
+            'space in light child input does not trigger a button click event',
+            function(done) {
+              var item = fixture('ButtonWithPaperInput');
+              var input = item.querySelector('#input');
 
-          var itemClickHandler = sinon.spy();
-          item.addEventListener('click', itemClickHandler);
+              var itemClickHandler = sinon.spy();
+              item.addEventListener('click', itemClickHandler);
 
-          input.focus();
-          MockInteractions.pressSpace(input);
-          Polymer.Base.async(function(){
-            expect(itemClickHandler.callCount).to.be.equal(0);
-            done();
-          }, 1);
-        });
+              input.focus();
+              MockInteractions.pressSpace(input);
+              Polymer.Base.async(function() {
+                expect(itemClickHandler.callCount).to.be.equal(0);
+                done();
+              }, 1);
+            });
 
         test('space in button triggers a button click event', function(done) {
           var item = fixture('ButtonWithPaperInput');
@@ -273,17 +278,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           item.addEventListener('click', itemClickHandler);
 
           MockInteractions.pressSpace(item);
-          Polymer.Base.async(function(){
+          Polymer.Base.async(function() {
             // You need two ticks, one for the MockInteractions event, and one
             // for the button event.
-            Polymer.Base.async(function(){
+            Polymer.Base.async(function() {
               expect(itemClickHandler.callCount).to.be.equal(1);
               done();
             }, 1);
           }, 1);
         });
       });
-
     });
   </script>
 </body>
