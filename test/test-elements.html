@@ -13,36 +13,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-button-state.html">
 
 <script>
-
   Polymer({
 
     is: 'test-control',
 
-    behaviors: [
-      Polymer.IronControlState
-    ]
+    behaviors: [Polymer.IronControlState]
 
   });
-
 </script>
 
 <script>
-
   Polymer({
 
     is: 'test-button',
 
-    behaviors: [
-      Polymer.IronControlState,
-      Polymer.IronButtonState
-    ],
+    behaviors: [Polymer.IronControlState, Polymer.IronButtonState],
 
     _buttonStateChanged: function() {
 
     }
 
   });
-
 </script>
 
 <dom-module id="nested-focusable">
@@ -54,17 +45,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </dom-module>
 
 <script>
-
   Polymer({
 
     is: 'nested-focusable',
 
-    behaviors: [
-      Polymer.IronControlState
-    ]
+    behaviors: [Polymer.IronControlState]
 
   });
-
 </script>
 
 <dom-module id="test-light-dom">
@@ -76,16 +63,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </dom-module>
 
 <script>
-
   Polymer({
 
     is: 'test-light-dom',
 
-    behaviors: [
-      Polymer.IronControlState,
-      Polymer.IronButtonState
-    ]
+    behaviors: [Polymer.IronControlState, Polymer.IronButtonState]
 
   });
-
 </script>

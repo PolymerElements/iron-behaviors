@@ -11,7 +11,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 
 <script>
-
   /**
    * @demo demo/index.html
    * @polymerBehavior
@@ -47,9 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * `null` means the attribute was not present.
        * @type {?string|undefined}
        */
-      _oldTabIndex: {
-        type: String
-      },
+      _oldTabIndex: {type: String},
 
       _boundFocusBlurHandler: {
         type: Function,
@@ -66,9 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     },
 
-    observers: [
-      '_changedControlState(focused, disabled)'
-    ],
+    observers: ['_changedControlState(focused, disabled)'],
 
     /**
      * @return {void}
@@ -93,13 +88,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if (event.target === this) {
         this._setFocused(event.type === 'focus');
       } else if (this.__handleEventRetargeting) {
-        var target = /** @type {Node} */(Polymer.dom(event).localTarget);
+        var target = /** @type {Node} */ (Polymer.dom(event).localTarget);
         if (!this.isLightDescendant(target)) {
-          this.fire(event.type, {sourceEvent: event}, {
-            node: this,
-            bubbles: event.bubbles,
-            cancelable: event.cancelable
-          });
+          this.fire(
+              event.type,
+              {sourceEvent: event},
+              {node: this, bubbles: event.bubbles, cancelable: event.cancelable});
         }
       }
     },
@@ -133,5 +127,4 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
   };
-
 </script>
