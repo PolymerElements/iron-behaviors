@@ -1,4 +1,4 @@
-<!--
+/**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -6,14 +6,15 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
+*/
+import '@polymer/polymer/polymer-legacy.js';
 
-<link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../iron-button-state.html">
-<link rel="import" href="../iron-control-state.html">
-
-<dom-module id="simple-button">
-  <template>
+import { IronButtonState } from '../iron-button-state.js';
+import { IronControlState } from '../iron-control-state.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+Polymer({
+  _template: html`
     <style>
       :host {
         display: inline-block;
@@ -50,18 +51,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <slot></slot>
+`,
 
-  </template>
-
-  <script>
-    Polymer({
-
-      is: 'simple-button',
-
-      behaviors: [Polymer.IronControlState, Polymer.IronButtonState],
-
-      hostAttributes: {role: 'button'}
-    });
-  </script>
-
-</dom-module>
+  is: 'simple-button',
+  behaviors: [IronControlState, IronButtonState],
+  hostAttributes: {role: 'button'}
+});
