@@ -11,7 +11,6 @@ found at http://polymer.github.io/PATENTS.txt
 import '@polymer/polymer/polymer-legacy.js';
 
 import {dom} from '@polymer/polymer/lib/legacy/polymer.dom.js';
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
 
 /**
  * @demo demo/index.html
@@ -55,13 +54,6 @@ export const IronControlState = {
       value: function() {
         return this._focusBlurHandler.bind(this);
       }
-    },
-
-    __handleEventRetargeting: {
-      type: Boolean,
-      value: function() {
-        return !this.shadowRoot && !PolymerElement;
-      }
     }
   },
 
@@ -76,28 +68,9 @@ export const IronControlState = {
   },
 
   _focusBlurHandler: function(event) {
-    // In Polymer 2.0, the library takes care of retargeting events.
-    if (PolymerElement) {
-      this._setFocused(event.type === 'focus');
-      return;
-    }
-
-    // NOTE(cdata):  if we are in ShadowDOM land, `event.target` will
-    // eventually become `this` due to retargeting; if we are not in
-    // ShadowDOM land, `event.target` will eventually become `this` due
-    // to the second conditional which fires a synthetic event (that is also
-    // handled). In either case, we can disregard `event.path`.
-    if (event.target === this) {
-      this._setFocused(event.type === 'focus');
-    } else if (this.__handleEventRetargeting) {
-      var target = /** @type {Node} */ (dom(event).localTarget);
-      if (!this.isLightDescendant(target)) {
-        this.fire(
-            event.type,
-            {sourceEvent: event},
-            {node: this, bubbles: event.bubbles, cancelable: event.cancelable});
-      }
-    }
+    // Polymer takes care of retargeting events.
+    this._setFocused(event.type === 'focus');
+    return;
   },
 
   _disabledChanged: function(disabled, old) {
