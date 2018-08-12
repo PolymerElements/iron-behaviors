@@ -16,7 +16,7 @@ import {dom} from '@polymer/polymer/lib/legacy/polymer.dom.js';
 
 /**
  * @demo demo/index.html
- * @polymerBehavior Polymer.IronButtonState
+ * @polymerBehavior IronButtonState
  */
 export const IronButtonStateImpl = {
 
