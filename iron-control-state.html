@@ -76,7 +76,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     _focusBlurHandler: function(event) {
       // In Polymer 2.0, the library takes care of retargeting events.
       if (Polymer.Element) {
-        this._setFocused(event.type === 'focus');
+        // 1.x / hybrid backwards compatiblity
+        if (event.target === this) {
+          this._setFocused(event.type === 'focus');
+        }
         return;
       }
 

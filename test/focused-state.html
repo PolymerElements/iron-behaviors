@@ -31,6 +31,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
 
+  <test-fixture id="SlottedFocusedState">
+    <template>
+      <slotted-focusable>
+        <input id="slotted">
+      </slotted-focusable>
+    </template>
+  </test-fixture>
+
   <test-fixture id="LightDOM">
     <template>
       <test-light-dom>
@@ -114,6 +122,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         expect(nBlurEvents).to.be.greaterThan(0);
         expect(nFocusEvents).to.be.greaterThan(0);
+      });
+    });
+
+    suite('slotted focusable', function() {
+      var focusable;
+      var shadow;
+      var slotted;
+
+      setup(function() {
+        focusable = fixture('SlottedFocusedState');
+        shadow = focusable.$.shadow;
+        slotted = focusable.querySelector('#slotted');
+      });
+
+      test('focus/blur of slotted does not focus/blur host element', function() {
+        expect(focusable.focused).to.be.equal(false);
+        MockInteractions.focus(slotted);
+        expect(focusable.focused).to.be.equal(false);
+        MockInteractions.focus(shadow);
+        expect(focusable.focused).to.be.equal(true);
+        MockInteractions.focus(slotted);
+        expect(focusable.focused).to.be.equal(true);
       });
     });
 
