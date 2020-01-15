@@ -69,7 +69,7 @@ export const IronButtonStateImpl = {
     }
   },
 
-  listeners: {down: '_downHandler', up: '_upHandler', tap: '_tapHandler'},
+  listeners: {down: '_downHandler', mouseup: '_upHandler', tap: '_tapHandler'},
 
   observers:
       ['_focusChanged(focused)', '_activeChanged(active, ariaActiveAttribute)'],
